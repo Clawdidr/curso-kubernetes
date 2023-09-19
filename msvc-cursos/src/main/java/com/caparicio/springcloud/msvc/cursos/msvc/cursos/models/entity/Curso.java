@@ -1,5 +1,6 @@
-package com.caparicio.springcloud.msvc.cursos.msvc.cursos.entity;
+package com.caparicio.springcloud.msvc.cursos.msvc.cursos.models.entity;
 
+import com.caparicio.springcloud.msvc.cursos.msvc.cursos.models.Usuario;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
@@ -17,6 +18,7 @@ import static jakarta.persistence.CascadeType.ALL;
 public class Curso {
   public Curso() {
     cursoUsuarios = new ArrayList<>();
+    usuarios = new ArrayList<>();
   }
 
   @Id
@@ -25,7 +27,10 @@ public class Curso {
   @NotBlank
   private String nombre;
   @OneToMany(cascade = ALL, orphanRemoval = true)
+  @JoinColumn(name = "curso_id")
   private List<CursoUsuario> cursoUsuarios;
+  @Transient
+  private List<Usuario> usuarios;
 
   public void addCursoUsuario(CursoUsuario cursoUsuario) {
     cursoUsuarios.add(cursoUsuario);

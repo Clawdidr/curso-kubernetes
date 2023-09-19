@@ -1,4 +1,4 @@
-package com.caparicio.springcloud.msvc.cursos.msvc.cursos.entity;
+package com.caparicio.springcloud.msvc.cursos.msvc.cursos.models.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;

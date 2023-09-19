@@ -1,6 +1,6 @@
 package com.caparicio.springcloud.msvc.cursos.msvc.cursos.services;
 
-import com.caparicio.springcloud.msvc.cursos.msvc.cursos.entity.Curso;
+import com.caparicio.springcloud.msvc.cursos.msvc.cursos.models.entity.Curso;
 
 import java.util.List;
 import java.util.Optional;

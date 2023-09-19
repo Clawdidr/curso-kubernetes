@@ -1,6 +1,6 @@
 package com.caparicio.springcloud.msvc.cursos.msvc.cursos.controllers;
 
-import com.caparicio.springcloud.msvc.cursos.msvc.cursos.entity.Curso;
+import com.caparicio.springcloud.msvc.cursos.msvc.cursos.models.entity.Curso;
 import com.caparicio.springcloud.msvc.cursos.msvc.cursos.services.CursoService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
