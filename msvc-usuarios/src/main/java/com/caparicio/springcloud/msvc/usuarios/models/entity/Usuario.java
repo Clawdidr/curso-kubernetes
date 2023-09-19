@@ -2,7 +2,7 @@ package com.caparicio.springcloud.msvc.usuarios.models.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,12 +16,12 @@ public class Usuario {
   @Id
   @GeneratedValue(strategy = IDENTITY)
   private Long id;
-  @NotEmpty
+  @NotBlank
   private String nombre;
-  @NotEmpty
+  @NotBlank
   @Email
   @Column(unique = true)
   private String email;
-  @NotEmpty
+  @NotBlank
   private String password;
 }

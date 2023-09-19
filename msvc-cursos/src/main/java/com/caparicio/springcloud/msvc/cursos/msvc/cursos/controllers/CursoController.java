@@ -2,11 +2,15 @@ package com.caparicio.springcloud.msvc.cursos.msvc.cursos.controllers;
 
 import com.caparicio.springcloud.msvc.cursos.msvc.cursos.entity.Curso;
 import com.caparicio.springcloud.msvc.cursos.msvc.cursos.services.CursoService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import static org.springframework.http.HttpStatus.CREATED;
@@ -29,14 +33,21 @@ public class CursoController {
   }
 
   @PostMapping("/")
-  public ResponseEntity<Curso> crear(@RequestBody Curso curso) {
+  public ResponseEntity<?> crear(@Valid @RequestBody Curso curso, BindingResult result) {
+    if (result.hasErrors()) {
+      return validar(result);
+    }
     Curso cursoDb = cursoService.guardar(curso);
 
     return status(CREATED).body(cursoDb);
   }
 
   @PutMapping("/{id}")
-  public ResponseEntity<Curso> editar(@RequestBody Curso curso, @PathVariable Long id) {
+  public ResponseEntity<?> editar(@Valid @RequestBody Curso curso, BindingResult result,
+                                      @PathVariable Long id) {
+    if (result.hasErrors()) {
+      return validar(result);
+    }
     Optional<Curso> cursoOpt = cursoService.porId(id);
     if (cursoOpt.isPresent()) {
       Curso cursoDb = cursoOpt.get();
@@ -58,5 +69,13 @@ public class CursoController {
     }
 
     return notFound().build();
+  }
+
+  private static ResponseEntity<Map<String, String>> validar(BindingResult result) {
+    Map<String, String> errores = new HashMap<>();
+    result.getFieldErrors().forEach(error -> errores.put(error.getField(),
+        "El campo " + error.getField() + " " + error.getDefaultMessage()));
+
+    return badRequest().body(errores);
   }
 }

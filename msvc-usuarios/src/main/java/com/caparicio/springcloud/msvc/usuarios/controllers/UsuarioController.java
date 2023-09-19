@@ -2,11 +2,15 @@ package com.caparicio.springcloud.msvc.usuarios.controllers;
 
 import com.caparicio.springcloud.msvc.usuarios.models.entity.Usuario;
 import com.caparicio.springcloud.msvc.usuarios.services.UsuarioService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import static org.springframework.http.HttpStatus.CREATED;
@@ -30,12 +34,19 @@ public class UsuarioController {
   }
 
   @PostMapping
-  public ResponseEntity<Usuario> crear(@RequestBody Usuario usuario) {
+  public ResponseEntity<?> crear(@Valid @RequestBody Usuario usuario, BindingResult result) {
+    if (result.hasErrors()) {
+      return validar(result);
+    }
     return status(CREATED).body(usuarioService.guardar(usuario));
   }
 
   @PutMapping("/{id}")
-  public ResponseEntity<Usuario> editar(@RequestBody Usuario usuario, @PathVariable Long id) {
+  public ResponseEntity<?> editar(@Valid @RequestBody Usuario usuario, BindingResult result,
+                                        @PathVariable Long id) {
+    if (result.hasErrors()) {
+      return validar(result);
+    }
     Optional<Usuario> usuarioOpt = usuarioService.porId(id);
     if (usuarioOpt.isPresent()) {
       Usuario usuarioDb = usuarioOpt.get();
@@ -57,5 +68,13 @@ public class UsuarioController {
       return ok().build();
     }
     return notFound().build();
+  }
+
+  private static ResponseEntity<Map<String, String>> validar(BindingResult result) {
+    Map<String, String> errores = new HashMap<>();
+    result.getFieldErrors().forEach(error -> errores.put(error.getField(),
+        "El campo " + error.getField() + " " + error.getDefaultMessage()));
+
+    return badRequest().body(errores);
   }
 }
