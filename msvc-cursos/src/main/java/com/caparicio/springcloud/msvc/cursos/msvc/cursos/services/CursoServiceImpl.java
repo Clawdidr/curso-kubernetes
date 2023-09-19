@@ -1,5 +1,6 @@
 package com.caparicio.springcloud.msvc.cursos.msvc.cursos.services;
 
+import com.caparicio.springcloud.msvc.cursos.msvc.cursos.models.Usuario;
 import com.caparicio.springcloud.msvc.cursos.msvc.cursos.models.entity.Curso;
 import com.caparicio.springcloud.msvc.cursos.msvc.cursos.repositories.CursoRepository;
 import lombok.AllArgsConstructor;
@@ -36,5 +37,20 @@ public class CursoServiceImpl implements CursoService {
   @Transactional
   public void eliminar(Long id) {
     cursoRepository.deleteById(id);
+  }
+
+  @Override
+  public Optional<Usuario> asignarUsuario(Usuario usuario, Long cursoId) {
+    return Optional.empty();
+  }
+
+  @Override
+  public Optional<Usuario> crearUsuario(Usuario usuario, Long id) {
+    return Optional.empty();
+  }
+
+  @Override
+  public Optional<Usuario> eliminarUsuario(Usuario usuario, Long cursoId) {
+    return Optional.empty();
   }
 }
