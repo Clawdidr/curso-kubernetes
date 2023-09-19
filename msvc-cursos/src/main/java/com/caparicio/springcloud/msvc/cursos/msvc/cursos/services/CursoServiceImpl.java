@@ -1,5 +1,6 @@
 package com.caparicio.springcloud.msvc.cursos.msvc.cursos.services;
 
+import com.caparicio.springcloud.msvc.cursos.msvc.cursos.clients.UsuarioClientRest;
 import com.caparicio.springcloud.msvc.cursos.msvc.cursos.models.Usuario;
 import com.caparicio.springcloud.msvc.cursos.msvc.cursos.models.entity.Curso;
 import com.caparicio.springcloud.msvc.cursos.msvc.cursos.repositories.CursoRepository;
@@ -14,6 +15,7 @@ import java.util.Optional;
 @AllArgsConstructor
 public class CursoServiceImpl implements CursoService {
   private final CursoRepository cursoRepository;
+  private final UsuarioClientRest clientRest;
 
   @Override
   @Transactional(readOnly = true)
