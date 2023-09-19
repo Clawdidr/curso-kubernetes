@@ -13,9 +13,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import static java.util.Collections.singletonMap;
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.ResponseEntity.*;
-import static org.springframework.http.ResponseEntity.notFound;
 
 @RestController
 @AllArgsConstructor
@@ -38,18 +38,28 @@ public class UsuarioController {
     if (result.hasErrors()) {
       return validar(result);
     }
+    if (usuarioService.existePorEmail(usuario.getEmail())) {
+      return badRequest().body(singletonMap("mensajeError", "Ya existe un usuario con ese email"));
+    }
     return status(CREATED).body(usuarioService.guardar(usuario));
   }
 
   @PutMapping("/{id}")
   public ResponseEntity<?> editar(@Valid @RequestBody Usuario usuario, BindingResult result,
-                                        @PathVariable Long id) {
+                                  @PathVariable Long id) {
     if (result.hasErrors()) {
       return validar(result);
     }
     Optional<Usuario> usuarioOpt = usuarioService.porId(id);
     if (usuarioOpt.isPresent()) {
       Usuario usuarioDb = usuarioOpt.get();
+
+      if (!usuario.getEmail().isBlank() &&
+          !usuario.getEmail().equalsIgnoreCase(usuarioDb.getEmail()) &&
+          usuarioService.porEmail(usuario.getEmail()).isPresent()) {
+        return badRequest().body(
+            singletonMap("mensajeError", "Ya existe un usuario con ese email"));
+      }
       usuarioDb.setNombre(usuario.getNombre());
       usuarioDb.setEmail(usuario.getEmail());
       usuarioDb.setPassword(usuario.getPassword());
