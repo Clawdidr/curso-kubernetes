@@ -1,25 +1,26 @@
 package com.caparicio.springcloud.msvc.cursos.msvc.cursos.controllers;
 
+import com.caparicio.springcloud.msvc.cursos.msvc.cursos.models.Usuario;
 import com.caparicio.springcloud.msvc.cursos.msvc.cursos.models.entity.Curso;
 import com.caparicio.springcloud.msvc.cursos.msvc.cursos.services.CursoService;
+import feign.FeignException;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
+import static java.util.Collections.singletonMap;
 import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.ResponseEntity.*;
 
 @RestController
 @AllArgsConstructor
 public class CursoController {
-  final private CursoService cursoService;
+  private final CursoService cursoService;
 
   @GetMapping
   public ResponseEntity<List<Curso>> listar() {
@@ -44,7 +45,7 @@ public class CursoController {
 
   @PutMapping("/{id}")
   public ResponseEntity<?> editar(@Valid @RequestBody Curso curso, BindingResult result,
-                                      @PathVariable Long id) {
+                                  @PathVariable Long id) {
     if (result.hasErrors()) {
       return validar(result);
     }
@@ -69,6 +70,44 @@ public class CursoController {
     }
 
     return notFound().build();
+  }
+
+  @PutMapping("/asignar-usuario/{cursoId}")
+  public ResponseEntity<?> asignarUsuario(@RequestBody Usuario usuario,
+                                          @PathVariable Long cursoId) {
+    Optional<Usuario> usuarioOpt;
+    try {
+      usuarioOpt = cursoService.asignarUsuario(usuario, cursoId);
+    } catch (FeignException fe) {
+      return ResponseEntity.status(NOT_FOUND).body(singletonMap("mensajeError",
+          "No existe el usuario por el id o error en la comunicación: " + fe.getMessage()));
+    }
+    return usuarioOpt.map(ResponseEntity::ok).orElseGet(() -> notFound().build());
+  }
+
+  @PostMapping("/crear-usuario/{cursoId}")
+  public ResponseEntity<?> crearUsuario(@RequestBody Usuario usuario, @PathVariable Long cursoId) {
+    Optional<Usuario> usuarioOpt;
+    try {
+      usuarioOpt = cursoService.crearUsuario(usuario, cursoId);
+    } catch (FeignException fe) {
+      return ResponseEntity.status(NOT_FOUND).body(singletonMap("mensajeError",
+          "No se pudo crear el usuario o error en la comunicación: " + fe.getMessage()));
+    }
+    return usuarioOpt.map(ResponseEntity::ok).orElseGet(() -> notFound().build());
+  }
+
+  @DeleteMapping("/eliminar-usuario/{cursoId}")
+  public ResponseEntity<?> eliminarUsuario(@RequestBody Usuario usuario,
+                                          @PathVariable Long cursoId) {
+    Optional<Usuario> usuarioOpt;
+    try {
+      usuarioOpt = cursoService.eliminarUsuario(usuario, cursoId);
+    } catch (FeignException fe) {
+      return ResponseEntity.status(NOT_FOUND).body(singletonMap("mensajeError",
+          "No existe el usuario por el id o error en la comunicación: " + fe.getMessage()));
+    }
+    return usuarioOpt.map(ResponseEntity::ok).orElseGet(() -> notFound().build());
   }
 
   private static ResponseEntity<Map<String, String>> validar(BindingResult result) {
