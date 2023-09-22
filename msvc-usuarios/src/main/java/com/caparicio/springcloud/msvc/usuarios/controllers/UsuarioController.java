@@ -64,7 +64,7 @@ public class UsuarioController {
       usuarioDb.setEmail(usuario.getEmail());
       usuarioDb.setPassword(usuario.getPassword());
 
-      return ResponseEntity.ok(usuarioService.guardar(usuarioDb));
+      return ok(usuarioService.guardar(usuarioDb));
     }
     return ResponseEntity.notFound().build();
   }
@@ -79,6 +79,12 @@ public class UsuarioController {
     }
     return notFound().build();
   }
+
+  @GetMapping("/usuarios-por-curso")
+  public ResponseEntity<?> obtenerAlumnosPorCurso(@RequestParam List<Long> ids) {
+    return ok(usuarioService.listarPorIds(ids));
+  }
+
 
   private static ResponseEntity<Map<String, String>> validar(BindingResult result) {
     Map<String, String> errores = new HashMap<>();
