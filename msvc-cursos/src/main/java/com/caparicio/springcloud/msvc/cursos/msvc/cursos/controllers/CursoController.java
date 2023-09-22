@@ -10,7 +10,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 import static java.util.Collections.singletonMap;
 import static org.springframework.http.HttpStatus.CREATED;
@@ -99,7 +102,7 @@ public class CursoController {
 
   @DeleteMapping("/eliminar-usuario/{cursoId}")
   public ResponseEntity<?> eliminarUsuario(@RequestBody Usuario usuario,
-                                          @PathVariable Long cursoId) {
+                                           @PathVariable Long cursoId) {
     Optional<Usuario> usuarioOpt;
     try {
       usuarioOpt = cursoService.eliminarUsuario(usuario, cursoId);
@@ -108,6 +111,13 @@ public class CursoController {
           "No existe el usuario por el id o error en la comunicación: " + fe.getMessage()));
     }
     return usuarioOpt.map(ResponseEntity::ok).orElseGet(() -> notFound().build());
+  }
+
+  @DeleteMapping("/eliminar-usuario/{id}")
+  public ResponseEntity<?> eliminarCursoUsuario(@PathVariable Long id) {
+    cursoService.eliminarCursoUsuarioPorId(id);
+
+    return noContent().build();
   }
 
   private static ResponseEntity<Map<String, String>> validar(BindingResult result) {

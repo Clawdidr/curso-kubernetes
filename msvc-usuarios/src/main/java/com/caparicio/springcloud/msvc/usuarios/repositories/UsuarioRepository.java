@@ -11,7 +11,7 @@ import java.util.Optional;
 public interface UsuarioRepository extends CrudRepository<Usuario, Long> {
   Optional<Usuario> findByEmail(String email);
 
-  @Query("SELECT u FROM Usuario u WHERE u.email=?1")
+  @Query("SELECT u FROM Usuario u WHERE u.email = ?1")
   Optional<Usuario> porEmail(String email);
 
   boolean existsByEmail(String email);
