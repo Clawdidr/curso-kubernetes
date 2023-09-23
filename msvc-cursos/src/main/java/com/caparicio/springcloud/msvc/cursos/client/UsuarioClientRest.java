@@ -1,6 +1,6 @@
-package com.caparicio.springcloud.msvc.cursos.msvc.cursos.clients;
+package com.caparicio.springcloud.msvc.cursos.client;
 
-import com.caparicio.springcloud.msvc.cursos.msvc.cursos.models.Usuario;
+import com.caparicio.springcloud.msvc.cursos.models.Usuario;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 

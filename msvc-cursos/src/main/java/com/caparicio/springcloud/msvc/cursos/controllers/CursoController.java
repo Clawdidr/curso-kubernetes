@@ -1,8 +1,8 @@
-package com.caparicio.springcloud.msvc.cursos.msvc.cursos.controllers;
+package com.caparicio.springcloud.msvc.cursos.controllers;
 
-import com.caparicio.springcloud.msvc.cursos.msvc.cursos.models.Usuario;
-import com.caparicio.springcloud.msvc.cursos.msvc.cursos.models.entity.Curso;
-import com.caparicio.springcloud.msvc.cursos.msvc.cursos.services.CursoService;
+import com.caparicio.springcloud.msvc.cursos.models.Usuario;
+import com.caparicio.springcloud.msvc.cursos.models.entity.Curso;
+import com.caparicio.springcloud.msvc.cursos.services.CursoService;
 import feign.FeignException;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -113,8 +113,8 @@ public class CursoController {
     return usuarioOpt.map(ResponseEntity::ok).orElseGet(() -> notFound().build());
   }
 
-  @DeleteMapping("/eliminar-usuario/{id}")
-  public ResponseEntity<?> eliminarCursoUsuario(@PathVariable Long id) {
+  @DeleteMapping("/eliminar-curso-usuario/{id}")
+  public ResponseEntity<?> eliminarCursoUsuarioPorId(@PathVariable Long id) {
     cursoService.eliminarCursoUsuarioPorId(id);
 
     return noContent().build();

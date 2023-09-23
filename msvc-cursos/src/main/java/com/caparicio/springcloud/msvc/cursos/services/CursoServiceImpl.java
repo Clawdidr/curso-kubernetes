@@ -1,10 +1,10 @@
-package com.caparicio.springcloud.msvc.cursos.msvc.cursos.services;
+package com.caparicio.springcloud.msvc.cursos.services;
 
-import com.caparicio.springcloud.msvc.cursos.msvc.cursos.clients.UsuarioClientRest;
-import com.caparicio.springcloud.msvc.cursos.msvc.cursos.models.Usuario;
-import com.caparicio.springcloud.msvc.cursos.msvc.cursos.models.entity.Curso;
-import com.caparicio.springcloud.msvc.cursos.msvc.cursos.models.entity.CursoUsuario;
-import com.caparicio.springcloud.msvc.cursos.msvc.cursos.repositories.CursoRepository;
+import com.caparicio.springcloud.msvc.cursos.models.entity.CursoUsuario;
+import com.caparicio.springcloud.msvc.cursos.client.UsuarioClientRest;
+import com.caparicio.springcloud.msvc.cursos.models.Usuario;
+import com.caparicio.springcloud.msvc.cursos.models.entity.Curso;
+import com.caparicio.springcloud.msvc.cursos.repositories.CursoRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

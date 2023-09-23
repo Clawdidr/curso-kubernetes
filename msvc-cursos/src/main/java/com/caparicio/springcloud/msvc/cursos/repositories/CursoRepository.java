@@ -1,6 +1,6 @@
-package com.caparicio.springcloud.msvc.cursos.msvc.cursos.repositories;
+package com.caparicio.springcloud.msvc.cursos.repositories;
 
-import com.caparicio.springcloud.msvc.cursos.msvc.cursos.models.entity.Curso;
+import com.caparicio.springcloud.msvc.cursos.models.entity.Curso;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;

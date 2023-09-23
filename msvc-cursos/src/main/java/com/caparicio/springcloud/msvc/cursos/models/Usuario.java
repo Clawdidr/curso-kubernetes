@@ -1,4 +1,4 @@
-package com.caparicio.springcloud.msvc.cursos.msvc.cursos.models;
+package com.caparicio.springcloud.msvc.cursos.models;
 
 import lombok.Getter;
 import lombok.Setter;

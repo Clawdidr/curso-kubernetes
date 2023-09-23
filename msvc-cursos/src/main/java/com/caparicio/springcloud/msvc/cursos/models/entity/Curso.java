@@ -1,6 +1,6 @@
-package com.caparicio.springcloud.msvc.cursos.msvc.cursos.models.entity;
+package com.caparicio.springcloud.msvc.cursos.models.entity;
 
-import com.caparicio.springcloud.msvc.cursos.msvc.cursos.models.Usuario;
+import com.caparicio.springcloud.msvc.cursos.models.Usuario;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
