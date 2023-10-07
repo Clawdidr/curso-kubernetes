@@ -39,7 +39,7 @@ public class UsuarioController {
       return validar(result);
     }
     if (usuarioService.existePorEmail(usuario.getEmail())) {
-      return badRequest().body(singletonMap("mensajeError", "Ya existe un usuario con ese email"));
+      return badRequest().body(singletonMap("mensajeError", "¡Ya existe un usuario con ese email!"));
     }
     return status(CREATED).body(usuarioService.guardar(usuario));
   }
