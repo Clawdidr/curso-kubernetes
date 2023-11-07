@@ -8,10 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 import static java.util.Collections.singletonMap;
 import static org.springframework.http.HttpStatus.CREATED;
@@ -23,8 +20,8 @@ public class UsuarioController {
   private final UsuarioService usuarioService;
 
   @GetMapping
-  public List<Usuario> listar() {
-    return usuarioService.listar();
+  public Map<String, List<Usuario>> listar() {
+    return Collections.singletonMap("usuarios", usuarioService.listar());
   }
 
   @GetMapping("/{id}")
