@@ -1,4 +1,4 @@
-FROM openjdk:17.0.2
+FROM amazoncorretto:17-alpine-jdk as builder
 
 WORKDIR /app/msvc-usuarios
 
@@ -11,8 +11,14 @@ RUN ./mvnw clean package -Dmaven.test.skip -Dmaven.main.skip -Dspring-boot.repac
 
 COPY ./msvc-usuarios/src ./src
 
-RUN ./mvnw clean package -DskpTests
+RUN ./mvnw clean package -DskipTests
+
+FROM amazoncorretto:17-alpine-jdk
+
+WORKDIR /app
+
+COPY --from=builder /app/msvc-usuarios/target/msvc-usuarios-0.0.1-SNAPSHOT.jar .
 
 EXPOSE 8001
 
-ENTRYPOINT ["java", "-jar", "./target/msvc-usuarios-0.0.1-SNAPSHOT.jar"]
+ENTRYPOINT ["java", "-jar", "msvc-usuarios-0.0.1-SNAPSHOT.jar"]
