@@ -17,6 +17,8 @@ FROM amazoncorretto:17-alpine-jdk
 
 WORKDIR /app
 
+RUN mkdir ./logs
+
 COPY --from=builder /app/msvc-usuarios/target/msvc-usuarios-0.0.1-SNAPSHOT.jar .
 
 EXPOSE 8001
