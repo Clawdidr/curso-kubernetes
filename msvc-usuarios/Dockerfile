@@ -1,4 +1,4 @@
-FROM amazoncorretto:17-alpine-jdk as builder
+FROM amazoncorretto:17-alpine-jdk AS builder
 
 WORKDIR /app/msvc-usuarios
 
