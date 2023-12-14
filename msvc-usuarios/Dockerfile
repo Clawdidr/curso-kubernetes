@@ -1,6 +1,9 @@
+ARG MSVC_NAME=msvc-usuarios
+
 FROM amazoncorretto:17-alpine-jdk AS builder
 
-ARG MSVC_NAME=msvc-usuarios
+ARG MSVC_NAME
+
 WORKDIR /app/$MSVC_NAME
 
 COPY ./pom.xml /app
@@ -16,9 +19,12 @@ RUN ./mvnw clean package -DskipTests
 
 FROM amazoncorretto:17-alpine-jdk
 
+ARG MSVC_NAME
+
 WORKDIR /app
+
 RUN mkdir ./logs
-ARG MSVC_NAME=msvc-usuarios
+
 ARG TARGET_FOLDER=/app/$MSVC_NAME/target
 COPY --from=builder $TARGET_FOLDER/msvc-usuarios-0.0.1-SNAPSHOT.jar .
 ARG PORT_APP=8001
